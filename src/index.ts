@@ -15,7 +15,7 @@ class Prompt4NpmScripts extends Command {
     // flag with a value (-n, --name=VALUE)
     path: flags.string({
       char: 'p',
-      description: 'path to your package.json. If ne path is given it uses the current working directory `process.cwd()`',
+      description: 'path to your package.json. If no path is given it uses the current working directory `process.cwd()`',
       default: `${process.cwd()}/package.json`,
     }
       ),
