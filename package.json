@@ -1,12 +1,12 @@
 {
-  "name": "prompt-4-npm-scripts",
+  "name": "prompt-4-scripts",
   "description": "prompting for npm scripts ",
   "version": "0.1.0",
   "author": "fmoronzirfas @fabianmoronzirfas",
   "bin": {
-    "p4npm-scripts": "./bin/run"
+    "p4scripts": "./bin/run"
   },
-  "bugs": "https://github.com/fabianmoronzirfas/prompt-4-npm-scripts/issues",
+  "bugs": "https://github.com/fabianmoronzirfas/prompt-4-scripts/issues",
   "dependencies": {
     "@oclif/command": "^1.5.4",
     "@oclif/config": "^1.8.8",
@@ -33,16 +33,16 @@
     "/bin",
     "/lib"
   ],
-  "homepage": "https://github.com/fabianmoronzirfas/prompt-4-npm-scripts",
+  "homepage": "https://github.com/fabianmoronzirfas/prompt-4-scripts",
   "keywords": [
     "oclif"
   ],
   "license": "MIT",
   "main": "lib/index.js",
   "oclif": {
-    "bin": "p4npm-scripts"
+    "bin": "p4scripts"
   },
-  "repository": "fabianmoronzirfas/prompt-4-npm-scripts",
+  "repository": "fabianmoronzirfas/prompt-4-scripts",
   "scripts": {
     "posttest": "tslint -p . -t stylish",
     "prepack": "rm -rf lib && tsc -b",
