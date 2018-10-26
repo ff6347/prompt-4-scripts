@@ -1,7 +1,7 @@
 {
   "name": "prompt-4-scripts",
   "description": "prompting for npm scripts ",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "fmoronzirfas @fabianmoronzirfas",
   "bin": {
     "p4scripts": "./bin/run"
