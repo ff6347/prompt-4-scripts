@@ -1,0 +1,7 @@
+{
+  "extends": "@oclif/tslint",
+  "rules":{
+    "semicolon": [true, "always"],
+    "no-inferrable-types": false
+  }
+}
