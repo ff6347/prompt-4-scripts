@@ -1,8 +1,8 @@
-# prompt-4-npm-scripts
+# prompt-4scripts
 
 prompting for npm scripts  
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io) [![Version](https://img.shields.io/npm/v/prompt-4-npm-scripts.svg)](https://npmjs.org/package/prompt-4-npm-scripts) [![Downloads/week](https://img.shields.io/npm/dw/prompt-4-npm-scripts.svg)](https://npmjs.org/package/prompt-4-npm-scripts) [![License](https://img.shields.io/npm/l/prompt-4-npm-scripts.svg)](https://github.com/fabianmoronzirfas/prompt-4-npm-scripts/blob/master/package.json)
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io) [![Version](https://img.shields.io/npm/v/prompt-4-scripts.svg)](https://npmjs.org/package/prompt-4-scripts) [![Downloads/week](https://img.shields.io/npm/dw/prompt-4-scripts.svg)](https://npmjs.org/package/prompt-4-scripts) [![License](https://img.shields.io/npm/l/prompt-4-scripts.svg)](https://github.com/fabianmoronzirfas/prompt-4-scripts/blob/master/package.json)
 
 <!-- toc -->
 
@@ -12,7 +12,7 @@ Prompt for npm-scripts and run them in a sub shell
 
 ```shell
 USAGE
-  $ p4npm-scripts
+  $ p4-scripts
 
 OPTIONS
   -h, --help       show CLI help
