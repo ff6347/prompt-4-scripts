@@ -1,7 +1,9 @@
 import {Command, flags} from '@oclif/command';
 import chalk from 'chalk';
-// import {promises as fsPromises} from 'fs';
+import {exec} from 'child_process';
 import * as fs from 'fs';
+import * as inquirer from 'inquirer';
+import {dirname} from 'path';
 
 class Prompt4NpmScripts extends Command {
   static description = 'Prompt for npm-scripts and run them in a sub shell';
@@ -13,21 +15,17 @@ class Prompt4NpmScripts extends Command {
     // flag with a value (-n, --name=VALUE)
     path: flags.string({
       char: 'p',
-      description: 'path to your package.json',
+      description: 'path to your package.json. If ne path is given it uses the current working directory `process.cwd()`',
       default: `${process.cwd()}/package.json`,
     }
       ),
-    // flag with no value (-f, --force)
   };
 
   static args = [];
 
   async run() {
     const {flags} = this.parse(Prompt4NpmScripts);
-
-    this.log(flags.path);
     const path = flags.path;
-
     const status = await fs.promises.stat(path as fs.PathLike).then((res: any) => {
       if (res.isFile()) {
         return true;
@@ -59,24 +57,36 @@ class Prompt4NpmScripts extends Command {
     .catch(err => {
       throw err;
     });
-    this.log(pkg.scripts);
-    // try {
-    //   pkg = JSON.parse(pkgString);
-    // } catch (err) {
-    //   if (err instanceof SyntaxError) {
-    //     this.error(err);
-    //     this.exit(1);
-    //   } else {
-    //     throw err;
-    //   }
-    // }
+    const choices = [];
+    // tslint:disable-next-line:no-for-in
+    for (let key in pkg.scripts) {
+      if (pkg.scripts.hasOwnProperty(key)) {
+        choices.push({name: `${key} ==> ${pkg.scripts[key]}`});
+      }
+    }
+    let responses: any = await inquirer.prompt([{
+      name: 'script',
+      message: 'select a script',
+      type: 'list',
 
-    // this.log(status as unknown as string);
-    // const name = flags.name || 'world'
-    // this.log(`hello ${name} from ./src/index.ts`)
-    // if (args.file && flags.force) {
-    //   this.log(`you input --force and --file: ${args.file}`)
-    // }
+      choices: [...choices],
+    }]);
+    const match: string[] = [];
+    responses.script.replace(/(?:(?! ==>).)*/, (res: string) => {
+      match.push(res);
+    });
+    exec(`cd ${dirname(path as string)} && npm run ${match[0]}`, (error, stdout, stderr) => {
+      if (error) {
+        this.log(chalk.red(`${error}`));
+        // this.error(`exec error: ${error}`);
+      }
+      if (stdout) {
+        this.log(chalk.green(`${stdout}`));
+      }
+      if (stderr) {
+        this.log(chalk.red(`${stderr}`));
+      }
+    });
   }
 }
 
