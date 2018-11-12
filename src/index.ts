@@ -5,6 +5,8 @@ import * as fs from 'fs';
 import * as inquirer from 'inquirer';
 import {dirname} from 'path';
 
+import checkPkg from './check-pkg-json';
+
 class Prompt4NpmScripts extends Command {
   static description = 'Prompt for npm-scripts and run them in a sub shell';
 
@@ -26,23 +28,30 @@ class Prompt4NpmScripts extends Command {
   async run() {
     const {flags} = this.parse(Prompt4NpmScripts);
     const path = flags.path;
-    const status = await fs.promises.stat(path as fs.PathLike).then((res: any) => {
-      if (res.isFile()) {
-        return true;
-      } else if (res.isDirectory()) {
-        this.error(chalk.red(`"${path}"\nis not a file! It is a directory.`));
-        return false;
-      }
-    })
-    .catch((err: any) => {
-      if (err.code === 'ENOENT') {
-        return false;
-      } else {
-        throw err;
-      }
-    });
+    const status = await checkPkg(path);
+    this.log(status as unknown as string);
 
-    if (status === false) {
+    // fs.promises.stat(path as fs.PathLike).then((res: any) => {
+    //   if (res.isFile()) {
+    //     return true;
+    //   } else if (res.isDirectory()) {
+    //     this.error(chalk.red(`"${path}"\nis not a file! It is a directory.`));
+    //     return false;
+    //   }
+    // })
+    // .catch((err: any) => {
+    //   if (err.code === 'ENOENT') {
+    //     return false;
+    //   } else {
+    //     throw err;
+    //   }
+    // });
+
+    if (status.exists === false) {
+      this.exit(1);
+    }
+    if (status.exists === true && status.isFile !== true) {
+      this.error(chalk.red(`"${path}"\nis not a file! It is a directory.`));
       this.exit(1);
     }
     const pkgString = await fs.promises.readFile(path as string, 'utf8')
@@ -57,7 +66,7 @@ class Prompt4NpmScripts extends Command {
     .catch(err => {
       throw err;
     });
-    const choices = [];
+    const choices: object[] = [];
     // tslint:disable-next-line:no-for-in
     for (let key in pkg.scripts) {
       if (pkg.scripts.hasOwnProperty(key)) {
